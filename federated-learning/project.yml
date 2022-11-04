@@ -1,6 +1,6 @@
 api_version: 3
-name: example_project
-description: NVIDIA FLARE sample project yaml file
+name: Pneumonia
+description: Training a pneumonia model based on chest x-ray images
 
 participants:
   # change example.com to the FQDN of the server
