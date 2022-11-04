@@ -25,6 +25,7 @@
             "args": {
                 "lr": 0.01,
                 "epochs": 5,
+                "dataset_name": "pneumonia-central",
                 "analytic_sender_id": "analytic_sender"
             }
         },
@@ -40,7 +41,6 @@
                 "events_to_convert": [
                     "analytix_log_stats"
                 ],
-                "dataset_name": "pneumonia-central",
                 "fed_event_prefix": "fed."
             }
         }

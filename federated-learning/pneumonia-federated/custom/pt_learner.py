@@ -73,7 +73,6 @@ class PTLearner(Learner):
 
         self.workspace = Workspace.from_config()
         print(self.workspace)
-        print('model', self.model)
 
         IMG_HEIGHT, IMG_WIDTH = 224, 224
         IMG_MEAN = 0.4818

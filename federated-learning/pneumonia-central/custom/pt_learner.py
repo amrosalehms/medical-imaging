@@ -34,7 +34,10 @@ from nvflare.app_common.app_constant import AppConstants
 from nvflare.app_common.pt.pt_fed_utils import PTModelPersistenceFormatManager
 from pt_constants import PTConstants
 from pneumonia_network import PneumoniaNetwork
-from azureml.core import Workspace, Dataset
+# from azureml.core import Workspace, Dataset
+from azure.ai.ml import MLClient
+from azure.identity import DefaultAzureCredential
+from azure.ai.ml._artifact_utilities as artifact_utils
 
 
 class PTLearner(Learner):
@@ -71,9 +74,10 @@ class PTLearner(Learner):
         self.loss = nn.CrossEntropyLoss()
         self.optimizer = SGD(self.model.parameters(), lr=self.lr, momentum=0.9)
 
-        self.workspace = Workspace.from_config()
-        print(self.workspace)
-        print('model', self.model)
+        # self.workspace = Workspace.from_config()
+        self.ml_client = MLClient.from_config(credential=DefaultAzureCredential())
+
+        print(self.ml_client)
 
         IMG_HEIGHT, IMG_WIDTH = 224, 224
         IMG_MEAN = 0.4818
@@ -85,19 +89,28 @@ class PTLearner(Learner):
                               Normalize(mean=(IMG_MEAN,), std=(IMG_STD,))
                               ])
 
-        pneumonia_dataset = Dataset.get_by_name(
-            self.workspace, self.dataset_name)
-        pneumonia_dataset.download(target_path=os.path.join(
-            os.path.expanduser('~'), 'data'), overwrite=True)
+        data_asset = ml_client.data.get(name=self.dataset_name, version=1)
+
+        artifact_utils.download_artifact_from_aml_uri(
+            uri = data_asset.path, 
+            destination = os.path.join(os.path.expanduser('~'), 'data'), overwrite=True, 
+            datastore_operation=ml_client.datastores
+        )
+
+        # pneumonia_dataset = Dataset.get_by_name(
+        #     self.workspace, self.dataset_name)
+        # pneumonia_dataset.download(target_path=os.path.join(
+        #     os.path.expanduser('~'), 'data'), overwrite=True)
+
         self.train_dataset = ImageFolder(root=os.path.join(os.path.expanduser(
-            '~'), 'data', 'pneumonia-2class-reduced', 'train'), transform=transforms)
+            '~'), 'data', 'train'), transform=transforms)
 
         self.train_loader = DataLoader(
             dataset=self.train_dataset, batch_size=32, shuffle=True, drop_last=True)
         self.n_iterations = len(self.train_loader)
 
         self.test_dataset = ImageFolder(root=os.path.join(os.path.expanduser(
-            '~'), 'data', 'pneumonia-2class-reduced', 'test'), transform=transforms)
+            '~'), 'data', 'test'), transform=transforms)
         self.test_loader = DataLoader(
             dataset=self.test_dataset, batch_size=100, shuffle=False)
 

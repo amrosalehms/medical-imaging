@@ -41,7 +41,8 @@
         },
         {
             "id": "tb_analytics_receiver",
-            "name": "TBAnalyticsReceiver",
+            "name": "MLFlowAnalyticsReceiver",
+            "path": "mlflow_receiver.MLFlowAnalyticsReceiver",
             "args": {
                 "events": [
                     "fed.analytix_log_stats"
