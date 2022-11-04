@@ -23,9 +23,9 @@
             "id": "pt_learner",
             "path": "pt_learner.PTLearner",
             "args": {
-                "lr": 0.01,
-                "epochs": 5,
-                "dataset_name": "pneumonia-dataset",
+                "lr": 0.0005,
+                "epochs": 15,
+                "dataset_name": "clidataset",
                 "analytic_sender_id": "analytic_sender"
             }
         },

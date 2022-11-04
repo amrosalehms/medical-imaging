@@ -37,7 +37,7 @@ from pneumonia_network import PneumoniaNetwork
 # from azureml.core import Workspace, Dataset
 from azure.ai.ml import MLClient
 from azure.identity import DefaultAzureCredential
-from azure.ai.ml._artifact_utilities as artifact_utils
+import azure.ai.ml._artifacts._artifact_utilities as artifact_utils
 
 
 class PTLearner(Learner):
