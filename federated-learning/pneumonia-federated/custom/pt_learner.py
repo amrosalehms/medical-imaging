@@ -74,7 +74,6 @@ class PTLearner(Learner):
         self.loss = nn.CrossEntropyLoss()
         self.optimizer = SGD(self.model.parameters(), lr=self.lr, momentum=0.9)
 
-        # self.workspace = Workspace.from_config()
         self.ml_client = MLClient.from_config(credential=DefaultAzureCredential())
 
         print(self.ml_client)
@@ -96,11 +95,6 @@ class PTLearner(Learner):
             destination = os.path.join(os.path.expanduser('~'), 'data'), 
             datastore_operation=self.ml_client.datastores
         )
-
-        # pneumonia_dataset = Dataset.get_by_name(
-        #     self.workspace, self.dataset_name)
-        # pneumonia_dataset.download(target_path=os.path.join(
-        #     os.path.expanduser('~'), 'data'), overwrite=True)
 
         self.train_dataset = ImageFolder(root=os.path.join(os.path.expanduser(
             '~'), 'data', 'train'), transform=transforms)
