@@ -25,7 +25,7 @@
             "args": {
                 "lr": 0.0005,
                 "epochs": 15,
-                "dataset_name": "clidataset",
+                "dataset_name": "pneumonia-dataset",
                 "analytic_sender_id": "analytic_sender"
             }
         },
