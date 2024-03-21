@@ -1,3 +1,19 @@
+name: My project Workflow
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build and test
+        run: |
+          # Your build and test commands here
+
+
 api_version: 3
 name: Pneumonia
 description: Training a pneumonia model based on chest x-ray images
