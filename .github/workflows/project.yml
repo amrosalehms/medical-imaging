@@ -1,21 +1,21 @@
-name: My project Workflow
+name: FL project preperation
+
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      resource_group:
+        description: 'Resource group name'
+        required: true
+        default: 'fedlearn' 
+        type: string
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Build and test
-        run: |
-          # Your build and test commands here
 
 
 api_version: 3
-name: Pneumonia
 description: Training a pneumonia model based on chest x-ray images
 
 participants:
