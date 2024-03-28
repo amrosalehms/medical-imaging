@@ -21,16 +21,24 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
-    - name: Provision resources
+   - name: Provision resources
       run: |
         az configure --defaults group="${{ github.event.inputs.resource_group }}"
+        RANDOMQUALIFIER="$RANDOM"
 
-        az vm create -n fedserver --image microsoft-dsvm:ubuntu-1804:1804-gen2:latest --authentication-type password --public-ip-address-dns-name ${{ github.event.inputs.resource_group }} \
+        az vm create -n fedserver20 --image microsoft-dsvm:ubuntu-2004:2004-gen2:latest --authentication-type password --public-ip-address-dns-name ${{ github.event.inputs.resource_group }} \
         --admin-password ${{ secrets.VM_PASSWORD }}
 
         az vm open-port -n fedserver --port 8002-8003 --priority 100
 
         az ml workspace create -n Asia-Hospital --location eastasia
+        az ml compute create --type ComputeInstance --name FedClientAsia$RANDOMQUALIFIER --workspace-name Asia-Hospital
+
         az ml workspace create -n Europe-Hospital --location westeurope
+        az ml compute create --type ComputeInstance --name FedClientEurope$RANDOMQUALIFIER --workspace-name Europe-Hospital
+
         az ml workspace create -n US-Hospital --location eastus
+        az ml compute create --type ComputeInstance --name FedClientUS$RANDOMQUALIFIER --workspace-name US-Hospital
+
         az ml workspace create -n central-workspace --location eastus
+        az ml compute create --type ComputeInstance --name FedClientUS$RANDOMQUALIFIER --workspace-name CENTRAL
