@@ -6,7 +6,7 @@ on:
       resource_group:
         description: 'Resource group name'
         required: true
-        default: 'flrg20' 
+        default: 'federatedRG' 
         type: string
 
 jobs:
