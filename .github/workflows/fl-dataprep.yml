@@ -6,7 +6,7 @@ on:
       resource_group:
         description: 'Resource group name'
         required: true
-        default: 'fedserver20' 
+        default: 'flrg20' 
         type: string
 
 jobs:
