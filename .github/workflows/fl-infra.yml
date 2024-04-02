@@ -21,7 +21,7 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
-   - name: Provision resources
+    - name: Provision resources
       run: |
         az configure --defaults group="${{ github.event.inputs.resource_group }}"
         RANDOMQUALIFIER="$RANDOM"
