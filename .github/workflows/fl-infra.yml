@@ -26,14 +26,14 @@ jobs:
         az configure --defaults group="${{ github.event.inputs.resource_group }}"
         RANDOMQUALIFIER="$RANDOM"
 
-        az vm create -n fedserver20 --image microsoft-dsvm:ubuntu-2004:2004-gen2:latest --authentication-type password --public-ip-address-dns-name ${{ github.event.inputs.resource_group }} \
+        az vm create -n fedserver20 --image  --image Ubuntu2204 --authentication-type password --public-ip-address-dns-name ${{ github.event.inputs.resource_group }} \
         --admin-password ${{ secrets.VM_PASSWORD }}
 
         az vm open-port -n fedserver20 --port 8002-8003 --priority 100
 
         az ml workspace create -n Asia-Hospital --location eastasia
         az ml compute create --type ComputeInstance --name FedClientAsia$RANDOMQUALIFIER --workspace-name Asia-Hospital
-
+        
         az ml workspace create -n Europe-Hospital --location westeurope
         az ml compute create --type ComputeInstance --name FedClientEurope$RANDOMQUALIFIER --workspace-name Europe-Hospital
 
